@@ -917,43 +917,51 @@ DOCTYPE html>
   /* ═══ MODAL IMAGEN EJERCICIO ═══ */
   .img-modal-bg {
     position: fixed; inset: 0; z-index: 2000;
-    background: rgba(0,0,0,.92);
-    display: flex; align-items: center; justify-content: center;
-    padding: 1.5rem;
+    background: rgba(0,0,0,.95);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
-    transition: opacity .25s;
+    transition: opacity .3s;
+    padding: 0;
   }
   .img-modal-bg.open { opacity: 1; pointer-events: all; }
   .img-modal-inner {
-    position: relative; max-width: 900px; width: 100%;
-    transform: scale(.95); transition: transform .25s;
+    position: relative;
+    width: 100vw; height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 3rem 1rem 5rem;
+    transform: scale(.97); transition: transform .3s;
   }
   .img-modal-bg.open .img-modal-inner { transform: scale(1); }
   .img-modal-inner img {
-    width: 100%; border-radius: 4px;
+    max-width: 100%; max-height: calc(100vh - 8rem);
+    object-fit: contain;
+    border-radius: 4px;
     box-shadow: 0 20px 60px rgba(0,0,0,.8);
   }
   .img-modal-nombre {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem; letter-spacing: .08em;
-    color: var(--rosa); margin-bottom: .3rem;
-    margin-top: .8rem;
+    font-size: 1.4rem; letter-spacing: .1em;
+    color: var(--rosa); margin-top: 1rem;
+    text-align: center;
   }
   .img-modal-close {
-    position: absolute; top: -14px; right: -14px;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--negro2); border: 1px solid rgba(155,114,207,.3);
-    color: var(--plateado); font-size: 1rem;
+    position: fixed; top: 1.2rem; right: 1.2rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(20,20,20,.9);
+    border: 1px solid rgba(155,114,207,.3);
+    color: var(--blanco); font-size: 1.1rem;
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: background .2s, color .2s;
-    line-height: 1;
+    cursor: pointer; transition: background .2s;
+    z-index: 2001;
   }
-  .img-modal-close:hover { background: var(--violeta); color: #fff; }
+  .img-modal-close:hover { background: var(--violeta); }
   .ej-thumb {
     cursor: zoom-in;
-    transition: opacity .2s, transform .2s;
+    transition: opacity .2s, transform .15s;
   }
-  .ej-thumb:hover { opacity: .85; transform: scale(1.03); }
+  .ej-thumb:hover { opacity: .85; transform: scale(1.04); }
 </style>
 </head>
 <body>
