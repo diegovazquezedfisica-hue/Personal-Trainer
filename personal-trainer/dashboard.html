@@ -966,7 +966,7 @@ function setGrupo(d, g) {
 
 // ══ BIBLIOTECA DE IMÁGENES ══
 const EJ_IMGS = {
-  'prensa':     ['assets/img/ejercicios/Prensa-45°.png'],
+  'prensa':     ['assets/img/ejercicios/Prensa-45%C2%B0.png','assets/img/ejercicios/Prensa-45.png'],
   'hip-thrust': ['assets/img/ejercicios/Hip-thrust-con-barra-C.png'],
   // Agregar más así:
   // 'sentadilla': ['assets/img/ejercicios/sentadilla-1.png','assets/img/ejercicios/sentadilla-2.png'],
@@ -980,6 +980,47 @@ function selEj(d, idx, id) {
   document.getElementById('epn-'+d+'-'+idx).textContent = ej.name;
   document.getElementById('epm-'+d+'-'+idx).textContent = ej.muscles;
   document.getElementById('epd-'+d+'-'+idx).textContent = ej.desc;
+  // Imagen de biblioteca
+  const imgEl = document.getElementById('ejimg-'+d+'-'+idx);
+  const imgs = EJ_IMGS[id];
+  if (imgs && imgs.length > 0 && imgEl) {
+    const src = imgs[0];
+    const imgTag = document.createElement('img');
+    imgTag.src = src;
+    imgTag.alt = ej.name;
+    imgTag.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:2px';
+    imgEl.innerHTML = '';
+    imgEl.appendChild(imgTag);
+    // Si hay varias imágenes agregar contador y flechas
+    if (imgs.length > 1) {
+      let cur = 0;
+      imgEl.style.position = 'relative';
+      const nav = document.createElement('div');
+      nav.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 3px';
+      nav.innerHTML =
+        '<button style="background:rgba(0,0,0,.6);border:none;color:#fff;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:14px">&#8249;</button>'+
+        '<button style="background:rgba(0,0,0,.6);border:none;color:#fff;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:14px">&#8250;</button>';
+      const counter = document.createElement('span');
+      counter.style.cssText = 'position:absolute;bottom:2px;right:4px;font-size:9px;color:rgba(255,255,255,.7)';
+      counter.textContent = '1/'+imgs.length;
+      imgEl.appendChild(nav);
+      imgEl.appendChild(counter);
+      nav.children[0].onclick = function(e){
+        e.stopPropagation();
+        cur = (cur-1+imgs.length)%imgs.length;
+        imgEl.querySelector('img').src = imgs[cur];
+        counter.textContent = (cur+1)+'/'+imgs.length;
+      };
+      nav.children[1].onclick = function(e){
+        e.stopPropagation();
+        cur = (cur+1)%imgs.length;
+        imgEl.querySelector('img').src = imgs[cur];
+        counter.textContent = (cur+1)+'/'+imgs.length;
+      };
+    }
+  } else if (imgEl) {
+    imgEl.innerHTML = '<svg viewBox="0 0 60 60" fill="none" stroke="var(--rosa2)" stroke-width="1.3"><circle cx="30" cy="10" r="6"/><path d="M20 26c0-5.5 4.5-10 10-10s10 4.5 10 10"/><path d="M13 48l7-14h20l7 14"/></svg>';
+  }
   document.getElementById('eprev-'+d+'-'+idx).classList.add('show');
 }
 function onEjInput(d, idx, val) {
