@@ -913,6 +913,47 @@ DOCTYPE html>
     .float-contacts { bottom: 1rem; left: 1rem; }
     .fab { width: 44px; height: 44px; }
   }
+
+  /* ═══ MODAL IMAGEN EJERCICIO ═══ */
+  .img-modal-bg {
+    position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,.92);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s;
+  }
+  .img-modal-bg.open { opacity: 1; pointer-events: all; }
+  .img-modal-inner {
+    position: relative; max-width: 900px; width: 100%;
+    transform: scale(.95); transition: transform .25s;
+  }
+  .img-modal-bg.open .img-modal-inner { transform: scale(1); }
+  .img-modal-inner img {
+    width: 100%; border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.8);
+  }
+  .img-modal-nombre {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: .08em;
+    color: var(--rosa); margin-bottom: .3rem;
+    margin-top: .8rem;
+  }
+  .img-modal-close {
+    position: absolute; top: -14px; right: -14px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--negro2); border: 1px solid rgba(155,114,207,.3);
+    color: var(--plateado); font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background .2s, color .2s;
+    line-height: 1;
+  }
+  .img-modal-close:hover { background: var(--violeta); color: #fff; }
+  .ej-thumb {
+    cursor: zoom-in;
+    transition: opacity .2s, transform .2s;
+  }
+  .ej-thumb:hover { opacity: .85; transform: scale(1.03); }
 </style>
 </head>
 <body>
@@ -1607,7 +1648,7 @@ function renderSemana(idx) {
       : '';
     panelHTML += `
       <div style="display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(155,114,207,.07)">
-        ${img ? `<div style="width:90px;height:64px;background:var(--negro3);border:1px solid rgba(155,114,207,.12);border-radius:3px;overflow:hidden;flex-shrink:0">${imgHTML}</div>` : ''}
+        ${img ? `<div class="ej-thumb" onclick="abrirImgModal('${img}','${ej.n}')" style="width:90px;height:64px;background:var(--negro3);border:1px solid rgba(155,114,207,.12);border-radius:3px;overflow:hidden;flex-shrink:0">${imgHTML}</div>` : ''}
         <div style="flex:1;min-width:0">
           <div style="font-size:.9rem;color:var(--blanco);font-weight:500;margin-bottom:.4rem">${ej.n}</div>
           <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
@@ -1620,6 +1661,22 @@ function renderSemana(idx) {
   });
   panel.innerHTML = panelHTML;
 }
+
+function abrirImgModal(src, nombre) {
+  document.getElementById('img-modal-src').src = src;
+  document.getElementById('img-modal-nombre').textContent = nombre;
+  document.getElementById('img-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarImgModal() {
+  document.getElementById('img-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Cerrar con Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') cerrarImgModal();
+});
+
 function animarBarras() {
   document.querySelectorAll('.barra-fill').forEach(el => { el.style.width = el.dataset.pct + '%'; });
 }
