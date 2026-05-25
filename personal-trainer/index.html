@@ -966,6 +966,15 @@ DOCTYPE html>
 </head>
 <body>
 
+<!-- MODAL IMAGEN EJERCICIO — debe estar fuera de cualquier overflow -->
+<div class="img-modal-bg" id="img-modal" onclick="cerrarImgModal()">
+  <button class="img-modal-close" onclick="cerrarImgModal()">&#x2715;</button>
+  <div class="img-modal-inner" onclick="event.stopPropagation()">
+    <img id="img-modal-src" src="" alt="">
+    <div class="img-modal-nombre" id="img-modal-nombre"></div>
+  </div>
+</div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Personal Trainer</div>
