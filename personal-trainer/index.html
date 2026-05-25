@@ -1556,6 +1556,30 @@ const SEMANA = [
   { dia:'DOM', tipo:'Descanso total', tag:'Descanso', ejercicios:[]},
 ];
 let diaActivo = 0;
+
+// ══ IMÁGENES DE EJERCICIOS ══
+const EJ_IMGS = {
+  'prensa':     ['assets/img/ejercicios/Prensa-45°.png'],
+  'hip-thrust': ['assets/img/ejercicios/Hip-thrust-con-barra-C.png'],
+  // Agregar más acá cuando subas nuevas imágenes
+};
+// Mapeo nombre → id para buscar imagen
+const EJ_NAME_MAP = {
+  'Prensa 45°':           'prensa',
+  'Hip thrust':           'hip-thrust',
+  'Hip Thrust con barra': 'hip-thrust',
+};
+function getEjImg(nombre) {
+  // Buscar por nombre exacto o parcial
+  for (const key of Object.keys(EJ_NAME_MAP)) {
+    if (nombre.toLowerCase().includes(key.toLowerCase())) {
+      const id = EJ_NAME_MAP[key];
+      return EJ_IMGS[id] ? EJ_IMGS[id][0] : null;
+    }
+  }
+  return null;
+}
+
 function renderSemana(idx) {
   diaActivo = idx;
   const grid = document.getElementById('semana-grid');
@@ -1571,20 +1595,30 @@ function renderSemana(idx) {
     panel.innerHTML = `<h4>${d.dia} — ${d.tipo}</h4><p style="color:var(--plateado);font-size:.9rem">Día de descanso. Recuperá el cuerpo y la mente.</p>`;
     return;
   }
-  panel.innerHTML = `<h4>${d.dia} — ${d.tipo}</h4>
-    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(155,114,207,.15)">
-      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--violeta2)">Ejercicio</span>
-      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--violeta2);text-align:center">Series</span>
-      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--violeta2);text-align:center">Reps</span>
-      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--violeta2);text-align:center">Descanso</span>
-    </div>
-    ${d.ejercicios.map(ej => `
-      <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:1rem;padding:.8rem 0;border-bottom:1px solid rgba(155,114,207,.04)">
-        <span style="font-size:.88rem;color:var(--blanco);font-weight:500">${ej.n}</span>
-        <span style="font-size:.82rem;color:var(--plateado);text-align:center">${ej.series}</span>
-        <span style="font-size:.82rem;color:var(--plateado);text-align:center">${ej.reps}</span>
-        <span style="font-size:.82rem;color:var(--plateado);text-align:center">${ej.descanso}</span>
-      </div>`).join('')}`;
+  // Header
+  let panelHTML = `<h4>${d.dia} — ${d.tipo}</h4>`;
+  // Ejercicios con imagen
+  d.ejercicios.forEach(ej => {
+    const img = getEjImg(ej.n);
+    const imgHTML = img
+      ? `<img src="${img}" alt="${ej.n}"
+           style="width:100%;height:100%;object-fit:cover;border-radius:3px"
+           onerror="this.parentElement.innerHTML=''">`
+      : '';
+    panelHTML += `
+      <div style="display:flex;align-items:center;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(155,114,207,.07)">
+        ${img ? `<div style="width:90px;height:64px;background:var(--negro3);border:1px solid rgba(155,114,207,.12);border-radius:3px;overflow:hidden;flex-shrink:0">${imgHTML}</div>` : ''}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:.9rem;color:var(--blanco);font-weight:500;margin-bottom:.4rem">${ej.n}</div>
+          <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+            <span style="font-size:.75rem;color:var(--plateado)">Series: <strong style="color:var(--violeta2)">${ej.series}</strong></span>
+            <span style="font-size:.75rem;color:var(--plateado)">Reps: <strong style="color:var(--violeta2)">${ej.reps}</strong></span>
+            <span style="font-size:.75rem;color:var(--plateado)">Descanso: <strong style="color:var(--violeta2)">${ej.descanso}</strong></span>
+          </div>
+        </div>
+      </div>`;
+  });
+  panel.innerHTML = panelHTML;
 }
 function animarBarras() {
   document.querySelectorAll('.barra-fill').forEach(el => { el.style.width = el.dataset.pct + '%'; });
