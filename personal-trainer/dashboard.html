@@ -812,12 +812,16 @@ function abrirBibModal(src, nombre, musculos) {
   document.getElementById('bib-modal-img').src = src;
   document.getElementById('bib-modal-nombre').textContent = nombre;
   document.getElementById('bib-modal-musculos').textContent = musculos;
-  m.classList.add('on');
+  m.style.opacity = '1';
+  m.style.pointerEvents = 'all';
   document.body.style.overflow = 'hidden';
 }
 function cerrarBibModal() {
   const m = document.getElementById('bib-modal');
-  if (m) { m.classList.remove('on'); document.body.style.overflow = ''; }
+  if (!m) return;
+  m.style.opacity = '0';
+  m.style.pointerEvents = 'none';
+  document.body.style.overflow = '';
 }
 
 // ═══════════════ CREDS ═══════════════
