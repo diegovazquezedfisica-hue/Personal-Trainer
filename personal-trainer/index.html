@@ -1630,25 +1630,56 @@ const EJ_IMGS = {
 // Mapeo nombre → id para buscar imagen
 const EJ_NAME_MAP = {
   'Prensa 45°':              'prensa45',
+  'Prensa 45':               'prensa45',
   'Sentadilla búlgara':      'sentadilla-bul',
   'Sentadilla bulgara':      'sentadilla-bul',
+  'Sentadilla Bulgara':      'sentadilla-bul',
   'Peso muerto sumo':        'peso-muerto-sum',
+  'Peso Muerto sumo':        'peso-muerto-sum',
   'Camilla isquiotibiales':  'camilla-isq',
+  'Camilla Isquiotibiales':  'camilla-isq',
   'Curl femoral':            'camilla-isq',
+  'Curl femoral tumbada':    'camilla-isq',
   'Peso muerto rumano':      'peso-muerto-rum',
   'Peso muerto con barra':   'peso-muerto-rum',
+  'Peso Muerto con barra':   'peso-muerto-rum',
   'RDL':                     'peso-muerto-rum',
+  'RDL mancuernas':          'peso-muerto-rum',
   'Elevación de caderas':    'elevacion-cad',
   'Elevacion de caderas':    'elevacion-cad',
   'Hip thrust':              'elevacion-cad',
+  'Hip Thrust':              'elevacion-cad',
+  'Hip Thrust con barra':    'elevacion-cad',
+  'Hip thrust con barra':    'elevacion-cad',
   'Sillón de cuádriceps':    'sillon-cua',
+  'Sillon de cuadriceps':    'sillon-cua',
   'Extension cuadriceps':    'sillon-cua',
+  'Extensión cuádriceps':    'sillon-cua',
   'Extensión de cuádriceps': 'sillon-cua',
+  'Extensión cuádriceps':    'sillon-cua',
+  'Extension cuádriceps':    'sillon-cua',
+  'Extensión cuadriceps':    'sillon-cua',
+  'Extension de cuadriceps': 'sillon-cua',
 };
 function getEjImg(nombre) {
-  // Buscar por nombre exacto o parcial
+  const n = nombre.toLowerCase().trim();
+  // 1. Buscar coincidencia exacta primero
   for (const key of Object.keys(EJ_NAME_MAP)) {
-    if (nombre.toLowerCase().includes(key.toLowerCase())) {
+    if (n === key.toLowerCase()) {
+      const id = EJ_NAME_MAP[key];
+      return EJ_IMGS[id] ? EJ_IMGS[id][0] : null;
+    }
+  }
+  // 2. Buscar si el nombre contiene la clave
+  for (const key of Object.keys(EJ_NAME_MAP)) {
+    if (n.includes(key.toLowerCase())) {
+      const id = EJ_NAME_MAP[key];
+      return EJ_IMGS[id] ? EJ_IMGS[id][0] : null;
+    }
+  }
+  // 3. Buscar si la clave contiene el nombre
+  for (const key of Object.keys(EJ_NAME_MAP)) {
+    if (key.toLowerCase().includes(n)) {
       const id = EJ_NAME_MAP[key];
       return EJ_IMGS[id] ? EJ_IMGS[id][0] : null;
     }
