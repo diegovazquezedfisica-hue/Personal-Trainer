@@ -457,6 +457,27 @@ button{cursor:pointer}
         <div id="rb"></div>
       </div>
 
+      <!-- BIBLIOTECA -->
+      <div class="panel" id="p-biblioteca">
+        <div class="sec-hdr">
+          <h2>Biblioteca de Ejercicios</h2>
+          <div class="hdr-a">
+            <button class="btn-sec" onclick="filtBiblioteca('todos')">Todos</button>
+            <button class="btn-sec" onclick="filtBiblioteca('Tren inferior')">Tren inferior</button>
+            <button class="btn-sec" onclick="filtBiblioteca('Tren superior')">Tren superior</button>
+            <button class="btn-sec" onclick="filtBiblioteca('Core')">Core</button>
+            <button class="btn-sec" onclick="filtBiblioteca('Cardio')">Cardio</button>
+            <button class="btn-sec" onclick="filtBiblioteca('Movilidad')">Movilidad</button>
+          </div>
+        </div>
+        <div id="biblioteca-grid" style="
+          display:grid;
+          grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+          gap:1px;
+          background:var(--border);
+        "></div>
+      </div>
+
       <!-- SERVICIOS -->
       <div class="panel" id="p-servicios">
         <div class="sec-hdr"><h2>Servicios</h2><button class="btn-pri" onclick="openM('m-serv')">+ Nuevo</button></div>
@@ -739,6 +760,65 @@ const EJ_DB = {
 };
 
 
+
+// ══ BIBLIOTECA ══
+function renderBiblioteca(filtro) {
+  const grid = document.getElementById('biblioteca-grid');
+  if (!grid) return;
+  const grupos = filtro === 'todos' ? GRUPOS : [filtro];
+  let html = '';
+  grupos.forEach(grupo => {
+    EJ_DB[grupo].forEach(ej => {
+      const imgs = EJ_IMGS[ej.id];
+      const imgSrc = imgs && imgs.length > 0 ? imgs[0] : null;
+      const imgHTML = imgSrc
+        ? `<img src="${imgSrc}" alt="${ej.name}"
+             style="width:100%;height:100%;object-fit:cover;cursor:zoom-in;transition:transform .2s"
+             onclick="abrirBibModal('${imgSrc}','${ej.name}','${ej.muscles}')"
+             onmouseover="this.style.transform='scale(1.03)'"
+             onmouseout="this.style.transform='scale(1)'">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:.3">
+             <svg width="40" height="40" viewBox="0 0 60 60" fill="none" stroke="var(--rosa2)" stroke-width="1.3">
+               <circle cx="30" cy="10" r="6"/>
+               <path d="M20 26c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+               <path d="M13 48l7-14h20l7 14"/>
+             </svg>
+           </div>`;
+      html += `
+        <div style="background:var(--bg2);display:flex;flex-direction:column">
+          <div style="height:140px;overflow:hidden;background:var(--bg3);position:relative">
+            ${imgHTML}
+            ${!imgSrc ? '<div style="position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:.6rem;color:var(--plata2);text-transform:uppercase;letter-spacing:.08em">Sin imagen</div>' : ''}
+          </div>
+          <div style="padding:.9rem">
+            <div style="font-size:.82rem;font-weight:500;color:var(--blanco);margin-bottom:.25rem">${ej.name}</div>
+            <div style="font-size:.68rem;color:var(--rosa);margin-bottom:.2rem">${ej.muscles}</div>
+            <div style="font-size:.62rem;color:var(--plata2);letter-spacing:.07em;text-transform:uppercase">${grupo}</div>
+          </div>
+        </div>`;
+    });
+  });
+  grid.innerHTML = html || '<div style="padding:2rem;color:var(--plata2)">No hay ejercicios en esta categoría.</div>';
+}
+function filtBiblioteca(filtro) {
+  renderBiblioteca(filtro);
+}
+
+// Modal para imagen grande en biblioteca
+function abrirBibModal(src, nombre, musculos) {
+  const m = document.getElementById('bib-modal');
+  if (!m) return;
+  document.getElementById('bib-modal-img').src = src;
+  document.getElementById('bib-modal-nombre').textContent = nombre;
+  document.getElementById('bib-modal-musculos').textContent = musculos;
+  m.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function cerrarBibModal() {
+  const m = document.getElementById('bib-modal');
+  if (m) { m.classList.remove('on'); document.body.style.overflow = ''; }
+}
+
 // ═══════════════ CREDS ═══════════════
 const CREDS = {entrenadora:'pt2025', admin:'drl123', demo:'demo'};
 
@@ -797,9 +877,9 @@ function initApp() {
 
 // ═══════════════ NAV ═══════════════
 const TITLES = {home:'Inicio',alumnos:'Mis Alumnos',fichas:'Fichas / Anamnesis',
-  rutinas:'Cargar Rutina',servicios:'Servicios',promociones:'Promociones',
-  ingresos:'Ingresos',gastos:'Gastos',alertas:'Alertas',cumples:'Cumpleaños',
-  estadisticas:'Estadísticas'};
+  rutinas:'Cargar Rutina',biblioteca:'Biblioteca de Ejercicios',servicios:'Servicios',
+  promociones:'Promociones',ingresos:'Ingresos',gastos:'Gastos',
+  alertas:'Alertas',cumples:'Cumpleaños',estadisticas:'Estadísticas'};
 
 function nav(id, btn) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
@@ -808,6 +888,7 @@ function nav(id, btn) {
   btn.classList.add('on');
   document.getElementById('tb-title').textContent = TITLES[id] || id;
   if (id === 'estadisticas') setTimeout(animBars, 80);
+  if (id === 'biblioteca') renderBiblioteca('todos');
   closeSB();
 }
 
@@ -902,7 +983,7 @@ function renderRB() {
         <div class="ej-hdr">
           <span>Ejercicio</span>
           <span class="ej-sel-col">Biblioteca</span>
-          <span>Series</span><span>Reps</span><span>Descanso</span><span></span>
+          <span>Series</span><span>Reps</span><span>Peso</span><span>Descanso</span><span></span>
         </div>
         <div id="ejs-${i}">${[0,1,2].map(j=>ejRow(i,j)).join('')}</div>
         <button class="btn-add-ej" onclick="addEj(${i})">+ Agregar ejercicio</button>
@@ -922,6 +1003,7 @@ function ejRow(d, idx) {
       </select>
       <input type="text" placeholder="4" style="text-align:center">
       <input type="text" placeholder="12" style="text-align:center">
+      <input type="text" placeholder="kg" style="text-align:center">
       <input type="text" placeholder="60s" style="text-align:center">
       <button class="btn-ghost" style="color:rgba(224,96,96,.5)" onclick="document.getElementById('${rid}').remove()">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
