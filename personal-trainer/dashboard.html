@@ -698,9 +698,13 @@ const EJ_DB = {
     {id:'prensa',      name:'Prensa 45°',              muscles:'Cuádriceps · Glúteos',                  desc:'Espalda apoyada completamente. No bloquear rodillas en extensión completa.'},
     {id:'hip-thrust',  name:'Hip Thrust con barra',    muscles:'Glúteos · Isquiotibiales',              desc:'Hombros sobre banco. Empuje de cadera hacia arriba. Apretar glúteos en el punto de máxima contracción.'},
     {id:'estocada',    name:'Estocada caminando',      muscles:'Cuádriceps · Glúteos · Aductores',      desc:'Paso largo. Rodilla delantera no supera la punta del pie. Torso erguido durante todo el movimiento.'},
-    {id:'rdl',         name:'RDL mancuernas',          muscles:'Isquiotibiales · Glúteos · Lumbares',   desc:'Caderas hacia atrás. Espalda plana. Sentir estiramiento isquiotibiales en el descenso.'},
-    {id:'ext-cua',     name:'Extensión de cuádriceps', muscles:'Cuádriceps',                            desc:'En máquina. Contracción completa arriba. Bajar con control en 3 segundos.'},
-    {id:'curl-fem',    name:'Curl femoral tumbada',    muscles:'Isquiotibiales',                        desc:'Caderas pegadas al banco. Sin arquear la zona lumbar. Contracción máxima.'},
+    {id:'peso-muerto-rum',         name:'RDL mancuernas',          muscles:'Isquiotibiales · Glúteos · Lumbares',   desc:'Caderas hacia atrás. Espalda plana. Sentir estiramiento isquiotibiales en el descenso.'},
+    {id:'sillon-cua',     name:'Extensión de cuádriceps', muscles:'Cuádriceps',                            desc:'En máquina. Contracción completa arriba. Bajar con control en 3 segundos.'},
+    {id:'camilla-isq',    name:'Curl femoral tumbada',    muscles:'Isquiotibiales',                        desc:'Caderas pegadas al banco. Sin arquear la zona lumbar. Contracción máxima.'},
+    
+    {id:'sentadilla-bul', name:'Sentadilla búlgara',      muscles:'Cuádriceps · Glúteos · Isquiotibiales', desc:'Pie trasero apoyado en banco. Rodilla delantera no supera la punta del pie. Torso erguido.'},
+    {id:'peso-muerto-sum',name:'Peso muerto sumo',         muscles:'Aductores · Glúteos · Isquiotibiales',  desc:'Pies más anchos que hombros, puntas hacia afuera. Espalda plana. Empuje desde el suelo.'},
+    {id:'elevacion-cad',  name:'Elevación de caderas',     muscles:'Glúteos · Isquiotibiales',              desc:'Espalda apoyada en banco. Empuje desde talones. Contracción máxima arriba.'},
     {id:'aductor',     name:'Aductor en máquina',      muscles:'Aductores',                             desc:'Rango completo de movimiento. Sin rebote en el punto de máxima apertura.'},
     {id:'gemelos',     name:'Elevación de talones',    muscles:'Gemelos · Sóleo',                       desc:'Extensión completa. Pausa de 1s en el tope. Bajada lenta y controlada.'},
   ],
@@ -966,10 +970,15 @@ function setGrupo(d, g) {
 
 // ══ BIBLIOTECA DE IMÁGENES ══
 const EJ_IMGS = {
-  'prensa':     ['assets/img/ejercicios/Prensa-45%C2%B0.png','assets/img/ejercicios/Prensa-45.png'],
-  'hip-thrust': ['assets/img/ejercicios/Hip-thrust-con-barra-C.png'],
+  'prensa':          ['assets/img/ejercicios/Prensa-45°.png'],
+  'sentadilla-bul':  ['assets/img/ejercicios/Sentadilla-Bulgara.png'],
+  'peso-muerto-sum': ['assets/img/ejercicios/Peso-muerto-sumo.png'],
+  'camilla-isq':     ['assets/img/ejercicios/Camilla-Isquitibiales.png'],
+  'peso-muerto-rum': ['assets/img/ejercicios/Peso-muerto-con-barra.png'],
+  'elevacion-cad':   ['assets/img/ejercicios/Elevacion-de-caderas.png'],
+  'sillon-cua':      ['assets/img/ejercicios/Sillon-de-cuadriceps.png'],
   // Agregar más así:
-  // 'sentadilla': ['assets/img/ejercicios/sentadilla-1.png','assets/img/ejercicios/sentadilla-2.png'],
+  // 'ejercicio': ['assets/img/ejercicios/Nombre-exacto.png'],
 };
 
 function selEj(d, idx, id) {
