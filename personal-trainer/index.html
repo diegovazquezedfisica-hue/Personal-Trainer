@@ -1617,15 +1617,33 @@ let diaActivo = 0;
 
 // ══ IMÁGENES DE EJERCICIOS ══
 const EJ_IMGS = {
-  'prensa':     ['assets/img/ejercicios/Prensa-45°.png'],
-  'hip-thrust': ['assets/img/ejercicios/Hip-thrust-con-barra-C.png'],
-  // Agregar más acá cuando subas nuevas imágenes
+  'prensa':          ['assets/img/ejercicios/Prensa-45°.png',
+                      'assets/img/ejercicios/Prensa-45°.png'],
+  'sentadilla-bul':  ['assets/img/ejercicios/Sentadilla-Bulgara.png'],
+  'peso-muerto-sum': ['assets/img/ejercicios/Peso-muerto-sumo.png'],
+  'camilla-isq':     ['assets/img/ejercicios/Camilla-Isquitibiales.png'],
+  'peso-muerto-rum': ['assets/img/ejercicios/Peso-muerto-con-barra.png'],
+  'prensa45':        ['assets/img/ejercicios/Prensa-45°.png'],
+  'elevacion-cad':   ['assets/img/ejercicios/Elevacion-de-caderas.png'],
+  'sillon-cua':      ['assets/img/ejercicios/Sillon-de-cuadriceps.png'],
 };
 // Mapeo nombre → id para buscar imagen
 const EJ_NAME_MAP = {
-  'Prensa 45°':           'prensa',
-  'Hip thrust':           'hip-thrust',
-  'Hip Thrust con barra': 'hip-thrust',
+  'Prensa 45°':              'prensa45',
+  'Sentadilla búlgara':      'sentadilla-bul',
+  'Sentadilla bulgara':      'sentadilla-bul',
+  'Peso muerto sumo':        'peso-muerto-sum',
+  'Camilla isquiotibiales':  'camilla-isq',
+  'Curl femoral':            'camilla-isq',
+  'Peso muerto rumano':      'peso-muerto-rum',
+  'Peso muerto con barra':   'peso-muerto-rum',
+  'RDL':                     'peso-muerto-rum',
+  'Elevación de caderas':    'elevacion-cad',
+  'Elevacion de caderas':    'elevacion-cad',
+  'Hip thrust':              'elevacion-cad',
+  'Sillón de cuádriceps':    'sillon-cua',
+  'Extension cuadriceps':    'sillon-cua',
+  'Extensión de cuádriceps': 'sillon-cua',
 };
 function getEjImg(nombre) {
   // Buscar por nombre exacto o parcial
