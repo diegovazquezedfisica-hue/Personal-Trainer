@@ -1587,29 +1587,29 @@ function switchTab(id, btn) {
 }
 const SEMANA = [
   { dia:'LUN', tipo:'Tren inferior', tag:'Fuerza', ejercicios:[
-    {n:'Sentadilla con barra',series:'4',reps:'10',descanso:'90s'},
-    {n:'Prensa 45°',series:'3',reps:'12',descanso:'60s'},
-    {n:'Hip thrust',series:'4',reps:'12',descanso:'90s'},
-    {n:'Extensión cuádriceps',series:'3',reps:'15',descanso:'45s'},
+    {n:'Sentadilla con barra',series:'4',reps:'10',peso:'40 kg',descanso:'90s'},
+    {n:'Prensa 45°',series:'3',reps:'12',peso:'60 kg',descanso:'60s'},
+    {n:'Hip thrust',series:'4',reps:'12',peso:'30 kg',descanso:'90s'},
+    {n:'Extensión cuádriceps',series:'3',reps:'15',peso:'20 kg',descanso:'45s'},
   ]},
   { dia:'MAR', tipo:'Cardio + Core', tag:'Cardio', ejercicios:[
-    {n:'HIIT en cinta (20 min)',series:'1',reps:'20min',descanso:'-'},
-    {n:'Plancha frontal',series:'3',reps:'45s',descanso:'30s'},
-    {n:'Crunch bicicleta',series:'3',reps:'20',descanso:'30s'},
+    {n:'HIIT en cinta (20 min)',series:'1',reps:'20min',peso:'—',descanso:'-'},
+    {n:'Plancha frontal',series:'3',reps:'45s',peso:'—',descanso:'30s'},
+    {n:'Crunch bicicleta',series:'3',reps:'20',peso:'—',descanso:'30s'},
   ]},
   { dia:'MIÉ', tipo:'Descanso activo', tag:'Descanso', ejercicios:[]},
   { dia:'JUE', tipo:'Tren superior', tag:'Fuerza', ejercicios:[
-    {n:'Press de banca',series:'4',reps:'10',descanso:'90s'},
-    {n:'Remo con barra',series:'3',reps:'12',descanso:'60s'},
-    {n:'Press militar',series:'3',reps:'12',descanso:'60s'},
+    {n:'Press de banca',series:'4',reps:'10',peso:'35 kg',descanso:'90s'},
+    {n:'Remo con barra',series:'3',reps:'12',peso:'30 kg',descanso:'60s'},
+    {n:'Press militar',series:'3',reps:'12',peso:'20 kg',descanso:'60s'},
   ]},
   { dia:'VIE', tipo:'Full body', tag:'Mixto', ejercicios:[
-    {n:'Peso muerto',series:'4',reps:'8',descanso:'120s'},
-    {n:'Estocadas',series:'3',reps:'10c/l',descanso:'60s'},
-    {n:'Dominadas asistidas',series:'3',reps:'8',descanso:'90s'},
+    {n:'Peso muerto',series:'4',reps:'8',peso:'50 kg',descanso:'120s'},
+    {n:'Estocadas',series:'3',reps:'10c/l',peso:'15 kg',descanso:'60s'},
+    {n:'Dominadas asistidas',series:'3',reps:'8',peso:'—',descanso:'90s'},
   ]},
   { dia:'SÁB', tipo:'Cardio recreativo', tag:'Cardio', ejercicios:[
-    {n:'Running exterior (30 min)',series:'1',reps:'-',descanso:'-'},
+    {n:'Running exterior (30 min)',series:'1',reps:'-',peso:'—',descanso:'-'},
   ]},
   { dia:'DOM', tipo:'Descanso total', tag:'Descanso', ejercicios:[]},
 ];
@@ -1720,6 +1720,7 @@ function renderSemana(idx) {
           <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
             <span style="font-size:.75rem;color:var(--plateado)">Series: <strong style="color:var(--violeta2)">${ej.series}</strong></span>
             <span style="font-size:.75rem;color:var(--plateado)">Reps: <strong style="color:var(--violeta2)">${ej.reps}</strong></span>
+            <span style="font-size:.75rem;color:var(--plateado)">Peso: <strong style="color:var(--rosa)">${ej.peso || '—'}</strong></span>
             <span style="font-size:.75rem;color:var(--plateado)">Descanso: <strong style="color:var(--violeta2)">${ej.descanso}</strong></span>
           </div>
         </div>
